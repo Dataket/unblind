@@ -5,7 +5,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 st.markdown('''
-# 💸 Sistema 2: Contrataciones
+# 🏗️ Sistema 2: Contrataciones
 -----
 ''')
 
