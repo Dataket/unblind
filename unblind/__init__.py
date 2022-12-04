@@ -12,5 +12,4 @@ __all__ = [
     'etl',
 ]
 
-Config.register_module(sys.modules[__name__])
 print('Loading unblind module 🔥')
