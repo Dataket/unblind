@@ -8,6 +8,9 @@ import py7zr
 st.markdown('''
 # 🚓 Sistema 3: SanCionados
 -----
+
+Servidores públicos y particulares sancionados.
+
 ''')
 
 # Select a type

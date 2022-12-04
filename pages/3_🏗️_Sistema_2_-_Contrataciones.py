@@ -7,6 +7,9 @@ import matplotlib.pyplot as plt
 st.markdown('''
 # 🏗️ Sistema 2: Contrataciones
 -----
+
+Servidores públicos que intervengan en procedimientos de contrataciones públicas.
+
 ''')
 
 s2 = pd.read_csv('data/process_data/s2/ut_ug_m_data.csv')
