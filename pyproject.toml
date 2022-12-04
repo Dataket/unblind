@@ -1,0 +1,22 @@
+[project]
+name = "unblind"
+version = "0.0.1"
+authors = [
+  { name="Gabriel Missael Barco", email="missaelgabo@gmail.com" },
+  { name="Gil Estéfano Rodríguez Rivera", email="ge.rodriguezrivera@ugto.mx" },
+  { name="Estefanía Saucedo Tamayo", email="estefaniasaucedo@hotmail.com" },
+  { name="Hector Fernando Nieto Soto", email="hectorfernandonietosoto@gmail.com" }
+]
+description = "Unblind is a Python package to create data visualizations from data of the Plataforma Digital Nacional, Sistema Nacional Anticorrupción"
+readme = "README.md"
+requires-python = ">=3.8"
+keywords = ["data visualization", "hackathon", "anticorrupción", "plataforma digital nacional"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Dataket/unblind"
+"Bug Tracker" = "https://github.com/Dataket/unblind/issues"
