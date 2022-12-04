@@ -94,11 +94,11 @@ with open(os.path.join(root_dir, "README.md"), "r") as fh:
 
 setup(
     name="unblind",
-    version="0.0.1",
+    version="0.0.4",
     python_requires=">=3.8",
     description="Unblind is a Python package to create data visualizations from data of the Plataforma Digital Nacional, Sistema Nacional Anticorrupción",
     long_description=long_description,
+    packages=find_packages(),
     long_description_content_type="text/markdown",
     install_requires=REQUIRES,
-    package_dir={'': './unblind'},
 )
