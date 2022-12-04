@@ -4,17 +4,19 @@ from streamlit_option_menu import option_menu
 st.set_page_config(page_title='Unblind', page_icon="https://i.imgur.com/glZSzm1.png")
 
 # sidebar menu
-with st.sidebar:
-    st.image('https://i.imgur.com/mee3uqn.png') 
-    selected = option_menu("Unblind", ["Home", "Upload",  "Tasks", 'Settings'], 
-    icons=['house', 'cloud-upload', "list-task", 'gear'], 
-    menu_icon="cast", default_index=0, orientation="vertical",
-    styles={
-        "icon": {"color": "orange", "font-size": "25px"}, 
-        "nav-link": {"font-size": "25px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
-        "nav-link-selected": {"background-color": "#2a9d8e"},
-    }
-)
+# with st.sidebar:
+#     st.image('https://i.imgur.com/mee3uqn.png') 
+#     selected = option_menu("Unblind", ["Home", "Upload",  "Tasks", 'Settings'], 
+#     icons=['house', 'cloud-upload', "list-task", 'gear'], 
+#     menu_icon="cast", default_index=0, orientation="horizontal",
+#     styles={
+#         "icon": {"color": "orange", "font-size": "25px"}, 
+#         "nav-link": {"font-size": "25px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
+#         "nav-link-selected": {"background-color": "#2a9d8e"},
+#     }
+# )
+
+st.image('https://i.imgur.com/mee3uqn.png', width=500)
 st.title('Proyecto📈')
 st.markdown('Desarrollamos una paquetería en Python 🐍 que se encarga del tratamiento de datos, creación de visualizaciones y el desarrollo de modelos predictivos. Utilizando nuestra página web podrá obtener gráficos dinámicos de su interés u archivos excel, con la información que requiera ¡En tan solo unos minutos ⏰!. Esta librería podrá ser utilizada por cualquier persona que tenga un poco de experiencia en programación, permitiendo tener un alcance más grande en el análisis de datos. Como extra la libería también incluye funciones que desarrollan modelos predictivos con la utilización de Machine Learning, lo que ayuda a obtener **posibles casos de corrupción**.')
 st.markdown('**⚠️''Es importante destacar que los modelos no arrojan casos de corrupción reales, solo permiten observar los casos de mayor preocupación. ⚠️**')
