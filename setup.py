@@ -51,7 +51,6 @@ REQUIRES = [
 "pexpect==4.8.0",
 "pickleshare==0.7.5",
 "Pillow==9.3.0",
-"pkg_resources==0.0.0",
 "pkginfo==1.9.2",
 "platformdirs==2.5.4",
 "prompt-toolkit==3.0.33",
