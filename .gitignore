@@ -13,6 +13,7 @@ develop-eggs/
 dist/
 downloads/
 eggs/
+streamlit_env/
 .eggs/
 lib/
 lib64/
