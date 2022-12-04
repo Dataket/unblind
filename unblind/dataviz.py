@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 
+sns.set_theme(context='talk', style='darkgrid', palette='colorblind')
 
 class DataViz:
     def __init__(self, pdn_system: str, root_path: str = './') -> None:
