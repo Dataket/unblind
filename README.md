@@ -8,6 +8,15 @@ Librería en Python 🐍 que ayuda en el tratamiento de datos, creación de visu
 - python 3.8+
 - python-env
 
+# Usa la librería 👀
+Para usar esta librería solamente tiene que hacer:
+```
+pip install unblind
+```
+¡Y Listo! Ahora puedes trabajar con datos de la PDN de manera más clara y sencilla, nos encargamos del procesamiento de datos por ti 😉.
+
+# Si eres developer y te interesa aportar, a continuación hay cosas que te interesan.
+
 # Estructura de carpetas 📁
 A continuación ser verá la estructura de carpetas utilizada en nuestro proyecto así como las descripciones de cada uno de los archivos.
 
