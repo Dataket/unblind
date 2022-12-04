@@ -107,7 +107,7 @@ twine==4.0.2
 typing-extensions==4.4.0
 tzdata==2022.7
 tzlocal==4.2
-unblind==0.0.4
+unblind==0.0.5
 urllib3==1.26.13
 validators==0.20.0
 watchdog==2.1.9
