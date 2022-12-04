@@ -1,6 +1,8 @@
 # Unblind + Streamlit = Visualización de datos en tiempo real, ¡sin programar! 😎
 En esta página web se podrán obtener gráficos dinámicos de su interés, y obtener archivos en excel con la información que se necesite en cuestión de minutos.
 
+# Si eres developer quieres aportar a la página, la siguientes secciones son para ti.
+
 # Requerimientos para el paquete 📦
 - Python 3.8.x (estable, por ejemplo: Python 3.8.10)
 - python-env
@@ -30,7 +32,7 @@ A continuación ser verá la estructura de carpetas utilizada en nuestro proyect
 - 1_❤️‍🔥_Unblind.py: script de Python que contiene la vista principal de nuestro proyecto.
 
 
-# Setup 🛠
+# Setup para editar la página 🛠
 Para poder correr el código del paquete y ser capaz de hacer cambios en él, se necesitará seguir los siguientes pasos.
 
 1. [¡Haz fork al repositorio!](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks)
@@ -77,3 +79,4 @@ streamlit run 1_❤️‍🔥_Unblind.py
 # Quieres contribuir 🤔
 Nosotros somos Dataket y nos puedes contactar por medio de los siguientes correos:
 - david.pedroza.segoviano@gmail.com
+- missaelgabo@gmail.com
