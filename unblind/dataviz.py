@@ -1,3 +1,13 @@
+#!/usr/bin/env python3
+
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+
+
 class DataViz:
     def __init__(self, pdn_system: str, root_path: str = './') -> None:
         self.pdn_system = pdn_system
@@ -121,3 +131,6 @@ def graph_features(root_path: str, system: str, group_data: list, file_path: str
     data_visualizer = DataViz(pdn_system=system, root_path=root_path)
 
     return data_visualizer.createGraph(group_data, file_path, variables)
+
+if __name__=='__main__':
+    print('This is a module for data visualization of the PDN system data 🙌🏽')
