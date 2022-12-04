@@ -35,38 +35,55 @@ class DataViz:
     def __bivariatePlot(self, group_data: list,
                         file_path: str, variables: list) -> object:
         input_table = pd.read_csv(
-            self.root_path+self.pdn_system+'/'+path+'_data.csv', usecols=variables)
+            self.root_path+self.pdn_system+'/'+file_path+'_data.csv', usecols=variables)
 
         if group_data[0] and group_data[1]:
             # Stacked countplot
             df_plot = input_table.groupby(variables).size().reset_index().pivot(
-                columns=variable[0], index=variable[1], values=0)
+                columns=variables[0], index=variables[1], values=0)
             output_graph = df_plot.plot(kind='bar', stacked=True)
 
         elif not (group_data[0] or group_data[1]):
             # Scatter plot
-            output_graph = sns.scatterplot(
-                data=input_table, x=variable[0], y=variable[1])
+            temp_input_table = input_table.copy()
+
+            # Add noise to avoid overlapping points
+
+            # Check if the variable is categorical
+            if len(temp_input_table[variables[0]].value_counts()) < 10:
+                temp_input_table[variables[0]] = temp_input_table[variables[0]] + \
+                    np.random.normal(0, 0.1, len(temp_input_table))
+            if len(temp_input_table[variables[1]].value_counts()) < 10:
+                temp_input_table[variables[1]] = temp_input_table[variables[1]] + \
+                    np.random.normal(0, 0.1, len(temp_input_table))
+
+            # Check if any of the variables is categorical
+            if len(input_table[variables[0]].value_counts()) < 10 or len(input_table[variables[1]].value_counts()) < 10:
+                output_graph = sns.scatterplot(
+                    data=temp_input_table, x=variables[0], y=variables[1], alpha=0.2, size = 0.2)
+            else:
+                output_graph = sns.scatterplot(
+                    data=temp_input_table, x=variables[0], y=variables[1], alpha =0.7)
         else:
             # Boxplot
             if group_data[0]:
                 df_plot = input_table.groupby(variables[0])
             else:
                 df_plot = input_table.groupby(variables[1])
-            output_graph = df_plot.plot(kind='bar', stacked=True)
+            output_graph = df_plot.boxplot(subplots=False)
 
         return output_graph
 
     def __univariatePlot(self, group_data: bool,
                          file_path: str, variable: str) -> object:
         input_series = pd.read_csv(
-            self.root_path+self.pdn_system+'/'+path+'_data.csv', usecols=[variable])
+            self.root_path+self.pdn_system+'/'+file_path+'_data.csv', usecols=[variable])
         if group_data:
             # Pie chart with counts
             output_graph = input_series.value_counts().plot(kind='pie')
         else:
             # Histogram
-            ourput_graph = sns.histplot(input_series)
+            output_graph = sns.histplot(input_series)
         return output_graph
 
     # ----------------------------------------------------------------------------
@@ -76,10 +93,10 @@ class DataViz:
     # ----------------------------------------------------------------------------
     # ----------------------------------------------------------------------------
     # ----------------------------------------------------------------------------
-    def availableFeatures(self, path, thresh: int = 10) -> None:
+    def availableFeatures(self, path_list:list, thresh:int=10) -> None:
 
         path_available_features = dict()
-        for path in system_paths[self.pdn_system]:
+        for path in path_list:
             path_table = pd.read_csv(
                 self.root_path+self.pdn_system+'/'+path+'_data.csv')
             path_available_features[path] = self.__featureSanityCheck(
@@ -100,7 +117,7 @@ class DataViz:
         else:
             raise Exception(
                 'Error on createGraph method:   Input variables must be a list of strings with length 1 or 2')
-
+        output_graph.set_xticklabels(output_graph.get_xticklabels(), rotation=90)
         return output_graph
 
 
@@ -120,7 +137,7 @@ def give_viable_features(root_path: str, system: str, aggregated_data: bool, thr
         path = 'ut_g_m'
 
     data_visualizer = DataViz(pdn_system=system, root_path=root_path)
-    data_visualizer.availableFeatures(system_dictionary[system], thresh)
+    data_visualizer.availableFeatures(system_paths[system], thresh)
 
     # NOTE: THE FEATURES MIGHT NEED SOME TREATMENT IN ORDER TO PROPERLY SHOW THEM
     return path, data_visualizer.path_available_features[path]
