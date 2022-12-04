@@ -23,13 +23,13 @@ class DataTreatment:
         raise TypeError('Error on __init__ method:   Only values allowed for pdn_system are "s1", "s2", "s3p" or "s3s"')
     else:
       raise TypeError('Error on __init__ method:   Only string type is allowed for pdn_system')
-    
+
     # Define the root path
     if type(root_path)==str:
       self.root_path = root_path
     else:
       raise TypeError('Error on __init__ method:   Only string type is allowed for root_path')
-    
+
     self.metadata_columns = metadata_columns.copy()
     self.keywords = keywords.copy()#list(set(keywords.copy() + metadata_columns.copy()))
 
@@ -53,7 +53,7 @@ class DataTreatment:
     with open(path, 'r') as f:
       dictionary = json.load(f)
     return dictionary
-  
+
   def __normalizeStateName(self, string:str) -> str:
     return string.replace('SESNA', '').replace('_','').replace(' ', '').lower()
 
@@ -62,7 +62,7 @@ class DataTreatment:
     self.last_data = self.tables[output].copy()
     self.table_history.append(output)
     return None
-  
+
   def __filterKeywords(self, dictionary:dict) -> dict:
     keywords = list(self.keywords.copy())+list(self.metadata_columns.copy())
     filtered_keys = []
@@ -70,7 +70,7 @@ class DataTreatment:
       filtered_keys += list(filter(lambda x: (keyword in x) or (keyword==x), list(dictionary.keys())))
     filtered_keys = list(set(filtered_keys))
     return {k: dictionary[k] for k in filtered_keys}
-  
+
   def __flattenDictionary(self, dictionary:dict,
                          separator:str='_', prefix:str='') -> dict:
     # Source: https://www.geeksforgeeks.org/python-convert-nested-dictionary-into-flattened-dictionary/
@@ -78,11 +78,11 @@ class DataTreatment:
             for kk, vv in dictionary.items()
             for k, v in self.__flattenDictionary(vv, separator, str(kk)).items()
           } if isinstance(dictionary, dict) else { prefix : dictionary }
-  
+
   def __flattenStatesData(self, state_paths:list) -> pd.DataFrame:
     # TODO: REFACTOR AND MODULARIZE THIS CODE
     flattened_data = pd.DataFrame({})
-    
+
     for state_path in state_paths:
       # Get the state name and normalize it
       state = self.__normalizeStateName(state_path.split('/')[-1])
@@ -97,7 +97,7 @@ class DataTreatment:
 
         # Flatten the dictionary and add it to the whole states' list
         state_list += [self.__filterKeywords(self.__flattenDictionary(item)) for item in dictionary_file]
-      
+
       # Normalize the state data
       state_data = pd.DataFrame(state_list)
       state_data['estado_declarante'] = state
@@ -158,7 +158,7 @@ class DataTreatment:
                           input=state_paths, output=output_table)
 
     return None
-  
+
   def defineId(self, id_columns:list=['CURP'], input_table:str='last_data',
                output_table:str='id_data') -> None:
     # This method takes a list of columns from which to make an unique id
@@ -171,7 +171,7 @@ class DataTreatment:
     FOR EVERYONE. HOWEVER, IN THIS EXERCISE WE'LL TAKE A COMBINATION OF FULL NAME
     PLUS THE RESPECTIVE GOVERNMENT ORGANISATION THE PERSON WORKS FOR
     PLUS THE STATE THAT REPORTED THE DATA.''')
-    
+
     # Create a unique string for each public servant
     df = self.tables[input_table].copy()
     df[id_columns] = df[id_columns].astype(str)
@@ -182,10 +182,10 @@ class DataTreatment:
     self.metadata_columns += id_columns
 
     return None
-  
+
   def normalizeData(self, input_table:str='last_data',
                     output_table:str='normalized_data') -> None:
-    # This method extends every element  with a list within the dataframe 
+    # This method extends every element  with a list within the dataframe
     # into multiple columns in the same dataframe
     self.__execTableMethod(method='normalizeData',
                           input=[input_table], output=output_table)
@@ -250,12 +250,12 @@ class FeatureEngineering(DataTreatment):
         try:
           # Fit the tokenizer
           self.tokenizers[column] = self._tokenize_tfidf(word_corpus)
-        
+
           # Apply element-wise tokenization on all iterable_features
           output_table[column] = input_table[column].apply(lambda x: list(self.tokenizers[column].transform([x]).toarray()[0]) if type(x)==str else x)
         except:
           self.metadata_columns.append(column)
-    
+
     # Construct the word corpus over all strings found on the dataframe
     #     (a good approach if you have A LOT of computing power and storage)
     else:
@@ -263,18 +263,18 @@ class FeatureEngineering(DataTreatment):
       for column in iterable_features:
         filtered_list = [item for item in input_table[column] if type(item)==str]
         word_corpus += filtered_list
-      
+
       try:
         # Fit the tokenizer
         self.tokenizers['all'] = self._tokenize_tfidf(word_corpus)
-        
+
         # Apply element-wise tokenization on all iterable_features
         output_table[iterable_features] = input_table[iterable_features].applymap(lambda x: self.tokenizers[column].transform([x]).toarray()[0] if type(x)==str else x)
       except:
           self.metadata_columns += iterable_features
 
     return output_table
-  
+
   def __groupData(self, input_name:list):
     # Read the table, define the features to ignore and the date_column to sort by
     input_table = self.tables[input_name[0]]
@@ -310,7 +310,7 @@ class FeatureEngineering(DataTreatment):
     self.__execTableMethod(method='tokenizeData',
                           input=[input_table], output=output_table)
     return None
-  
+
   def groupData(self, input_table:str='last_data', output_table:str='grouped_data') -> None:
     # This method groups data into multiple features
     self.__execTableMethod(method='groupData',
@@ -326,7 +326,7 @@ def main():
   import numpy as np
   from sklearn.feature_extraction.text import TfidfVectorizer
   import pickle
-  
+
   # The metadata column for every system
   metadata_columns = ['id']
 
@@ -349,10 +349,10 @@ def main():
 
   metadata_columns += ["fechaCaptura", "expediente", "fechaCaptura", "expediente"]
   metadata_columns += ['servidorPublicoSancionado_'+item for item in servidor_items]
-  
+
   # The unique build for ids in each system (at least in this exercise, without CURP)
 
-  # For system 1, it will be the full name plus the delcaring institution plus estado_declarante 
+  # For system 1, it will be the full name plus the delcaring institution plus estado_declarante
   declaracion_items = ["nombre", "primerApellido", "segundoApellido"]
   s1_id = ['declaracion_situacionPatrimonial_datosGenerales_'+item for item in declaracion_items]
   s1_id += ['estado_declarante', 'metadata_institucion']
@@ -370,9 +370,9 @@ def main():
 
   # Put every list into a single dictionary
   systems_id_dictionary = {'s1': s1_id, 's2': s2_id, 's3s': s3s_id}
-  
+
   grouping_date_dictionary = {'s1': 'metadata_actualizacion', 's2': 'fechaCaptura', 's3s': 'fechaCaptura', 's3p': 'fechaCaptura'}
-  
+
   # SINCE THERE'S A LOT OF RAM REQUIREMENTS, WE DROP HIGH NAN COLUMNS AND LOW VARIANCE ONES
   for system in ['s1', 's2', 's3s', 's3p']:
     if system=='s1':
@@ -450,6 +450,6 @@ def main():
 
     with open('./'+system+'/etl.pkl', 'wb') as f:
       pickle.dump(etl, f)
-  
+
 if __name__=='__main__':
   main()
