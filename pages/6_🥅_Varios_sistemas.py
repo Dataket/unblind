@@ -1,7 +1,7 @@
 import streamlit as st
 
 st.markdown('''
-# 💸 Sistema 1: Declaraciones
+# 💸 Gráficas considerando varios sistemas.
 -----
 
 Trabajo en progreso ⏳... ¡Espéralo pronto!
