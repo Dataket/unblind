@@ -74,6 +74,59 @@ pip install -r requirements.txt
 
 5. Y ahora puedes testear todas estas funcionalidades en un notebook, script o lo que quieras necesites.
 
+# Ejemplo de uso 🔎
+
+Vamos a aprender cómo hacer una visualización para el Sistema 2 de la PDN:
+
+1. Importamos la librería y definimos los caminos:
+```python
+# Se importa el módulo unblind
+from unblind import utils, etl, dataviz
+
+# Se define el path de trabajo
+working_path = '/working_path/'
+root_path = working_path+'data/'
+pdn_system = 's2'
+```
+
+2. Descargamos los archivos de los sistemas de la PDN:
+```python
+# Se descargan los sistemas de la PDN
+utils.get_datasets(to_path=root_path)
+```
+
+3. Extraemos y tratamos los datos que nos interesan:
+```python
+# Se definen las palabras clave que nos interesa tomar del Sistema 2
+keywords = ['Procedimiento']
+
+# Se define el objeto de extracción de datos y se realiza la extracción de datos
+extraction = etl.FeatureEngineering(pdn_system=pdn_system, root_path=root_path, keywords=keywords, metadata_columns=[])
+extraction.extractData('extracted_data')
+
+# Posteriormente se realiza la normalización de la tabla para evitar traer listas o diccionarios dentro de la extracción
+extraction.normalizeData('extracted_data', 'normalized')
+
+# Se sustituyen los valores missings por un cero
+extraction.missingData(0, 'normalized_data', 'missing_data')
+
+# Se guarda la tabla
+extraction.tables['missing_data'].to_csv(root_path+system+'/ut_ug_m_data.csv', index=False) # El nombre es por Un-Tokenized + Un-Grouped + Missing-treated data
+```
+
+4. Creamos la visualización:
+```python
+# Una vez que ya tenemos guardado el csv tratado, podemos definir la clase de visualizaciones
+dataviz = dataviz.DataViz(pdn_system=pdn_system, root_path=root_path)
+
+# Realizamos nuestra primer gráfica
+file_path = 'ut_ug_m' # Es el nombre del archivo que guardamos, en al convensión que usamos pero sin el sufijo '_data.csv'
+dataviz.createGraph(group_data=[True], file_path=file_path, variables=['tipoProcedimiento_1_clave'])
+
+# Mostramos la gráfica
+plt.show()
+```
+
 # Quieres contribuir 🤔
 Nosotros somos Dataket y nos puedes contactar por medio de los siguientes correos:
 - david.pedroza.segoviano@gmail.com
