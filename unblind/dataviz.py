@@ -20,7 +20,7 @@ class DataViz:
         non_constant_columns.append(column)
 
     return non_constant_columns
-  
+
   def __bivariatePlot(self, group_data:list,
                       file_path:str, variables:list) -> object:
     input_table = pd.read_csv(self.root_path+self.pdn_system+'/'+path+'_data.csv', usecols=variables)
@@ -42,7 +42,7 @@ class DataViz:
       output_graph = df_plot.plot(kind='bar', stacked=True)
 
     return output_graph
-  
+
   def __univariatePlot(self, group_data:bool,
                        file_path:str, variable:str) -> object:
     input_series = pd.read_csv(self.root_path+self.pdn_system+'/'+path+'_data.csv', usecols=[variable])
@@ -67,7 +67,7 @@ class DataViz:
     for path in system_paths[self.pdn_system]:
       path_table = pd.read_csv(self.root_path+self.pdn_system+'/'+path+'_data.csv')
       path_available_features[path] = self.__featureSanityCheck(path_table, thresh)
-    
+
     self.path_available_features = path_available_features
 
     return None
@@ -83,8 +83,8 @@ class DataViz:
 
     return output_graph
 
-  
-  
+
+
 # This function is for recommending a list of features
 # (On stramlit app, it can show the displayed features to select)
 def give_viable_features(root_path:str, system:str, aggregated_data:bool, thresh:int) -> tuple:
@@ -95,7 +95,7 @@ def give_viable_features(root_path:str, system:str, aggregated_data:bool, thresh
 
   if system!='s1':
     aggregated_data = False
-  
+
   path = 'ut_ug_m'
   if aggregated_data:
     path = 'ut_g_m'
@@ -104,7 +104,7 @@ def give_viable_features(root_path:str, system:str, aggregated_data:bool, thresh
   data_visualizer.availableFeatures(system_dictionary[system], thresh)
 
   # NOTE: THE FEATURES MIGHT NEED SOME TREATMENT IN ORDER TO PROPERLY SHOW THEM
-  return path, data_visualizer.path_available_features[path] 
+  return path, data_visualizer.path_available_features[path]
 
 
 
@@ -112,5 +112,5 @@ def give_viable_features(root_path:str, system:str, aggregated_data:bool, thresh
 def graph_features(root_path:str, system:str, group_data:list, file_path:str, variables:list) -> object:
   # NOTE: group_data IS A LIST OF BOOLEANS
   data_visualizer = DataViz(pdn_system=system, root_path=root_path)
-  
+
   return data_visualizer.createGraph(group_data, file_path, variables)
