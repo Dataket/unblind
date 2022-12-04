@@ -1,3 +1,16 @@
+#!/usr/bin/env python3
+
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+import os
+import json
+from glob import glob
+import pandas as pd
+import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+import pickle
+
 class DataTreatment:
     def __init__(self, pdn_system: str, root_path: str,
                  keywords: list = [], metadata_columns: list = []) -> None:
@@ -341,14 +354,6 @@ class FeatureEngineering(DataTreatment):
 
 
 def main():
-    # LIBRARIES
-    import os
-    import json
-    from glob import glob
-    import pandas as pd
-    import numpy as np
-    from sklearn.feature_extraction.text import TfidfVectorizer
-    import pickle
 
     # The metadata column for every system
     metadata_columns = ['id']
