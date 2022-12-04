@@ -353,7 +353,7 @@ class FeatureEngineering(DataTreatment):
         return None
 
 
-def main():
+def main(root_path = './'):
 
     # The metadata column for every system
     metadata_columns = ['id']
@@ -409,7 +409,7 @@ def main():
     # SINCE THERE'S A LOT OF RAM REQUIREMENTS, WE DROP HIGH NAN COLUMNS AND LOW VARIANCE ONES
     for system in ['s1', 's2', 's3s', 's3p']:
         if system == 's1':
-            etl = FeatureEngineering(pdn_system=system, root_path='./',
+            etl = FeatureEngineering(pdn_system=system, root_path=root_path,
                                      keywords=['escolaridad', 'ingreso', 'inversion'], metadata_columns=metadata_columns)
 
             # Initial extraction and normalization
@@ -426,28 +426,28 @@ def main():
             etl.missingData(0, 'norm_data_1', 'miss_data_1')
 
             # Save this untokenized ungrouped data
-            etl.last_data.to_csv('./'+system+'/ut_ug_m_data.csv', index=False)
+            etl.last_data.to_csv(root_path+system+'/ut_ug_m_data.csv', index=False)
 
             # Group the historic data
             etl.groupData('miss_data_1', 'group_data_1')
 
             # Save this untokenized grouped data
-            etl.last_data.to_csv('./'+system+'/ut_g_um_data.csv', index=False)
+            etl.last_data.to_csv(root_path+system+'/ut_g_um_data.csv', index=False)
 
             # Missing treatment for new NaNs (it has a different missing input because the origin is different)
             etl.missingData(-1, 'group_data_1', 'miss_data_2')
 
             # Save this untokenized grouped data
-            etl.last_data.to_csv('./'+system+'/ut_g_m_data.csv', index=False)
+            etl.last_data.to_csv(root_path+system+'/ut_g_m_data.csv', index=False)
 
             # Tokenize the text data and then normalize the newly created vectors
             etl.tokenizeData(True, 'miss_data_1', 'tok_data')
             etl.normalizeData('tok_data', 'norm_data_2')
             etl.missingData(0, 'norm_data_2', 'miss_data_3')
-            etl.last_data.to_csv('./'+system+'/t_ug_m_data.csv', index=False)
+            etl.last_data.to_csv(root_path+system+'/t_ug_m_data.csv', index=False)
 
         else:
-            etl = FeatureEngineering(pdn_system=system, root_path='./',
+            etl = FeatureEngineering(pdn_system=system, root_path=root_path,
                                      keywords=['nivel', 'tipo', 'nombre', 'clave', 'siglas', 'valor', 'superior', 'expediente', 'objeto', 'acto', 'causa', 'responsable', 'resolucion', 'multa', 'observacion', 'documento'], metadata_columns=metadata_columns)
 
             # Initial extraction and normalization
@@ -468,7 +468,7 @@ def main():
             etl.missingData(0, 'norm_data_1', 'miss_data_1')
 
             # Save this untokenized ungrouped data
-            etl.last_data.to_csv('./'+system+'/ut_ug_m_data.csv', index=False)
+            etl.last_data.to_csv(root_path+system+'/ut_ug_m_data.csv', index=False)
 
             # Tokenize the text data and then normalize the newly created vectors
             etl.tokenizeData(True, 'miss_data_1', 'tok_data')
@@ -478,11 +478,11 @@ def main():
             etl.missingData(0, 'norm_data_2', 'miss_data_3')
 
             # Save this tokenized ungrouped data
-            etl.last_data.to_csv('./'+system+'/t_ug_m_data.csv', index=False)
+            etl.last_data.to_csv(root_path+system+'/t_ug_m_data.csv', index=False)
 
-        with open('./'+system+'/etl.pkl', 'wb') as f:
+        with open(root_path+system+'/etl.pkl', 'wb') as f:
             pickle.dump(etl, f)
 
 
 if __name__ == '__main__':
-    main()
+    main(root_path='./data/')
