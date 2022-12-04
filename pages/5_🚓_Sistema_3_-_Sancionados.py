@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import py7zr
 
 st.markdown('''
-# 🚓 Sistema 3: Sansionados
+# 🚓 Sistema 3: SanCionados
 -----
 ''')
 
