@@ -20,7 +20,7 @@ st.markdown('Desarrollamos una paquetería en Python 🐍 que se encarga del tra
 st.markdown('**⚠️''Es importante destacar que los modelos no arrojan casos de corrupción reales, solo permiten observar los casos de mayor preocupación. ⚠️**')
 st.markdown('🔗 Repositorio de GitHub: https://github.com/Dataket/unblind.git')
 st.title('Video🎥')
-st.video("https://youtu.be/KQia57Mw6aA")
+st.video("https://youtu.be/KkR3yv8d4v0")
 st.title('Equipo')
 st.markdown('#### Somos un equipo de estudiantes con gusto por la ciencia de datos, el desarrollo web, y otras sorpresas ✨')
 col1, col2, col3 = st.columns(3)
