@@ -139,3 +139,4 @@ plt.show()
 # Quieres contribuir 🤔
 Nosotros somos Dataket y nos puedes contactar por medio de los siguientes correos:
 - david.pedroza.segoviano@gmail.com
+- missaelgabo@gmail.com
